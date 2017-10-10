@@ -2056,6 +2056,7 @@ angular.module('kityminderEditor', [
 	'ui.colorpicker'
 ])
 	.config(["$sceDelegateProvider", function($sceDelegateProvider) {
+        console.log('Track :Enter $sceDelegateProvider function!');
 		$sceDelegateProvider.resourceUrlWhitelist([
 			// Allow same origin resource loads.
 			'self',
@@ -2066,6 +2067,7 @@ angular.module('kityminderEditor', [
 		]);
 	}]);
 angular.module('kityminderEditor').run(['$templateCache', function($templateCache) {
+    console.log('Track :Enter $templateCache function!');
   'use strict';
 
   $templateCache.put('ui/directive/appendNode/appendNode.html',
@@ -2228,7 +2230,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 angular.module('kityminderEditor').service('commandBinder', function() {
 	return {
 		bind: function(minder, command, scope) {
-
+            console.log('Track :Enter commandBinder service bind function!');
 			minder.on('interactchange', function() {
 				scope.commandDisabled = minder.queryCommandState(command) === -1;
 				scope.commandValue = minder.queryCommandValue(command);
@@ -2240,6 +2242,7 @@ angular.module('kityminderEditor').service('commandBinder', function() {
 angular.module('kityminderEditor')
 	.provider('config',  function() {
 
+        console.log('Track :Enter config provider function!');
 		this.config = {
 			// 右侧面板最小宽度
 			ctrlPanelMin: 250,
@@ -2741,6 +2744,7 @@ angular.module('kityminderEditor')
 angular.module('kityminderEditor')
     .service('memory', function() {
 
+        console.log('Track :Enter memory service function!');
         function isQuotaExceeded(e) {
             var quotaExceeded = false;
             if (e) {
@@ -2793,6 +2797,7 @@ angular.module('kityminderEditor')
 angular.module('kityminderEditor')
     .service('minder.service',  function() {
 
+        console.log('Track :Enter minder.service service function!');
         var callbackQueue = [];
 
         function registerEvent(callback) {
@@ -2812,6 +2817,7 @@ angular.module('kityminderEditor')
     });
 angular.module('kityminderEditor')
     .service('resourceService', ['$document', function($document) {
+        console.log('Track :Enter resourceService service function!');
     var openScope = null;
 
     this.open = function( dropdownScope ) {
@@ -2860,6 +2866,7 @@ angular.module('kityminderEditor')
     };
 }])
 angular.module('kityminderEditor').service('revokeDialog', ['$modal', 'minder.service', function($modal, minderService) {
+    console.log('Track :Enter revokeDialog service function!');
 
     minderService.registerEvent(function() {
 
@@ -3517,7 +3524,7 @@ angular.module('kityminderEditor')
 				onInit: '&'
 			},
 			link: function(scope, element, attributes) {
-
+                console.log('Track :Enter kityminderEditor directive\'s link function!');
 				var $minderEditor = element.children('.minder-editor')[0];
 
 				function onInit(editor, minder) {
@@ -3540,8 +3547,10 @@ angular.module('kityminderEditor')
 
 						var editor = window.editor = new Editor($minderEditor);
 
+                        console.log("editor\'s storage= "+ window.localStorage.__dev_minder_content);
 						if (window.localStorage.__dev_minder_content) {
 							editor.minder.importJson(JSON.parse(window.localStorage.__dev_minder_content));
+                            console.log("editor\'s storage changed= "+ window.localStorage.__dev_minder_content);
 						}
 
 						editor.minder.on('contentchange', function() {

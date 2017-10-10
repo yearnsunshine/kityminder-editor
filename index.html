@@ -106,8 +106,10 @@
 
 
 <script>
+    console.log('Track 0:Enter index script!');
 	angular.module('kityminderDemo', ['kityminderEditor'])
 			.controller('MainController', function($scope) {
+                console.log('Track 1:Enter MainController!');
 				$scope.initEditor = function(editor, minder) {
 					window.editor = editor;
 					window.minder = minder;

@@ -8,6 +8,7 @@ angular.module('kityminderEditor')
 				onInit: '&'
 			},
 			link: function(scope, element, attributes) {
+				console.log('Track 2:Enter kityminderEditor.directive.js\'s link function');
 
 				var $minderEditor = element.children('.minder-editor')[0];
 
@@ -21,6 +22,7 @@ angular.module('kityminderEditor')
 				}
 
 				if (typeof(seajs) != 'undefined') {
+                    console.log('Track 3:Enter When seajs was defined');
 					/* global seajs */
 					seajs.config({
 						base: './src'
@@ -31,12 +33,15 @@ angular.module('kityminderEditor')
 
 						var editor = window.editor = new Editor($minderEditor);
 
+						console.log("directive\'s storage= "+ window.localStorage.__dev_minder_content);
 						if (window.localStorage.__dev_minder_content) {
 							editor.minder.importJson(JSON.parse(window.localStorage.__dev_minder_content));
+                            console.log("directive\'s storage= "+ window.localStorage.__dev_minder_content);
 						}
 
 						editor.minder.on('contentchange', function() {
 							window.localStorage.__dev_minder_content = JSON.stringify(editor.minder.exportJson());
+                            console.log("directive\'s storage changed= "+ window.localStorage.__dev_minder_content);
 						});
 
 						window.minder = window.km = editor.minder;
